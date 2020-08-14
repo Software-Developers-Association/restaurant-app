@@ -1,13 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ReactComponent as Camera} from '../icons/icon-add-photo.svg';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 
-const backgroundURL = "https://images.unsplash.com/photo-1568197260846-5e4e2aa3e9af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80";
+const propTypes = {
+    onDismiss: PropTypes.func
+};
 
 export default function Signup(props) {
+    const {onDismiss = undefined} = props;
+
     return (
-        <div className="absolute left-0 bottom-0 w-full h-full bg-black bg-opacity-50 md:bg-white md:bg-opacity-100 flex flex-col justify-end">
+        <div
+            style={{
+                zIndex: 0
+            }}
+            className="absolute left-0 bottom-0 w-full h-full bg-black bg-opacity-50 md:bg-white md:bg-opacity-100 flex flex-col justify-end">
+            <div
+                style={{
+                    zIndex: -1
+                }}
+                className="visible md:hidden absolute left-0 bottom-0 w-full h-full"
+                onClick={() => {
+                    console.log("User wants to dismiss...");
+                    onDismiss && onDismiss();
+                }}>
+
+            </div>
+            
             <div
                 style={{
                     minHeight: '300px',
@@ -38,11 +59,25 @@ export default function Signup(props) {
                         <InputField label="Email" />
                         <InputField label="Password" isPassword={true} />
                     </div>
-                    <Button className="mx-auto w-full text-center" buttonStyle={`${Button.styles.contained}`} text="Create Account" />
+                    <div className="flex space-x-2">
+                        <Button
+                            className="mx-auto w-full text-center"
+                            buttonStyle={`${Button.styles.contained}`}
+                            text="Create" />
+                        <Button
+                            className="hidden md:inline-block mx-auto w-full text-center"
+                            buttonStyle={`${Button.styles.text}`}
+                            text="Cancel"
+                            onClick={() =>{
+                                onDismiss && onDismiss();
+                            }} />
+                    </div>
             </div>
         </div>
     );
 }
+
+Signup.propTypes = propTypes;
 
         // <div className="relative flex flex-col md:flex-row justify-end md:justify-between h-screen">
         //     <div

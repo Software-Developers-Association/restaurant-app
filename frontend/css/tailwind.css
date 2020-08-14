@@ -133,6 +133,12 @@
     animation-duration: 1s;
 }
 
+@screen md {
+    .signup-form {
+        animation-duration: 0s;
+    }
+}
+
 @keyframes bottom-popup {
     from  {
         transform: translateY(100%);

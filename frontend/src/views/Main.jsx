@@ -1,11 +1,13 @@
 import React from 'react';
 import {ReactComponent as Icon} from '../icons/icon-restaurant.svg';
 import Signup from './Signup';
+import SignIn from './SignIn';
 
 const backgroundURL = "https://images.unsplash.com/photo-1513618364580-fe1596762e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
 
 export default function Main(props) {
     const [showSignup, setShowSignup] = React.useState(false);
+    const [showSignin, setShowSignin] = React.useState(false);
 
     return (
         <div className="h-screen md:flex">
@@ -44,11 +46,17 @@ export default function Main(props) {
                     <button className="px-3 py-2 w-full rounded-full bg-orange-500 text-white" onClick={() => {
                         setShowSignup(true);
                     }}>Sign up</button>
-                    <button className="px-3 py-2 w-full rounded-full bg-white text-orange-500">Sign in</button>
+                    <button className="px-3 py-2 w-full rounded-full bg-white text-orange-500" onClick={() => {
+                        setShowSignin(true);
+                    }}>Sign in</button>
                 </div>
 
                 {
-                    showSignup && <Signup />
+                    showSignup && <Signup onDismiss={() => setShowSignup(false)} />
+                }
+
+                {
+                    showSignin && <SignIn onDismissed={() => setShowSignin(false)} />
                 }
             </div>
         </div>

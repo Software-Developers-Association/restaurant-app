@@ -872,6 +872,12 @@ video {
   animation-duration: 1s;
 }
 
+@media (min-width: 768px) {
+  .signup-form {
+    animation-duration: 0s;
+  }
+}
+
 @keyframes bottom-popup {
   from  {
     transform: translateY(100%);

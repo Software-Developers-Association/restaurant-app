@@ -25,11 +25,14 @@ function App() {
       {
         isAuth ?
         <RESTaurant />
-        : <Main authCallback={
-          (success) => {
-            document.cookie = "isAuth="+ success;
-            setIsAuth(success);
-        }} />
+        :
+        <Main
+          authCallback={
+            (success) => {
+              document.cookie = "isAuth="+ success;
+              setIsAuth(success);
+            }
+          } />
       }
     </>
   );

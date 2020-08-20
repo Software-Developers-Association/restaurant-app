@@ -1,6 +1,6 @@
 import React from 'react';
 import {ReactComponent as Icon} from '../icons/icon-restaurant.svg';
-import Signup from './Signup';
+import SignUp from './SignUp';
 import SignIn from './SignIn';
 
 const backgroundURL = "https://images.unsplash.com/photo-1513618364580-fe1596762e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
@@ -9,6 +9,7 @@ export default function Main(props) {
     const [showSignup, setShowSignup] = React.useState(false);
     const [showSignin, setShowSignin] = React.useState(false);
     const {authCallback = undefined} = props;
+    const [signUpResult, setSignUpResult] = React.useState(false);
 
     return (
         <div className="h-screen md:flex">
@@ -53,7 +54,14 @@ export default function Main(props) {
                 </div>
 
                 {
-                    showSignup && <Signup onDismiss={() => setShowSignup(false)} />
+                    showSignup && <SignUp
+                        onDismiss={() => setShowSignup(false)}
+                        onSignUpResult={(success) => {
+                            if(success) {
+                                setShowSignup(false);
+                                setShowSignin(true);
+                            }
+                        }} />
                 }
 
                 {

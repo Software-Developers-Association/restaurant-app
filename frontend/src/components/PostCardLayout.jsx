@@ -11,7 +11,7 @@ function getColumnCount() {
     return 2;
 }
 
-export default function Home(props) {
+export default function PostCardLayout(props) {
     const {posts} = props;
 
     const [columnCount, setColumnCount] = useState(getColumnCount());

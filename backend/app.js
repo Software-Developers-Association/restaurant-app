@@ -317,7 +317,7 @@ function createTableLikes() {
          });
      }
 
-     const image_url = req.protocol + "://" + req.headers.host + "/static/images/" + req.file.filename;
+     const image_url = "/static/images/" + req.file.filename;
 
      const sql =
      `
@@ -342,7 +342,8 @@ function createTableLikes() {
      const parsedUrl = url.parse(req.url, true);
 
      const schema = {
-         post_id: Joi.number().required()
+         post_id: Joi.number().optional(),
+         user_id: Joi.number().optional()
      }
 
      const validation = Joi.validate(parsedUrl.query, schema);
@@ -354,27 +355,54 @@ function createTableLikes() {
          });
      }
 
-     const post_id = Number.parseInt(parsedUrl.query.post_id);
+     let sql = "";
+     
+     if(Object.prototype.hasOwnProperty.call(parsedUrl.query, "post_id")) {
+        const post_id = Number.parseInt(parsedUrl.query.post_id);
 
-     const sql =
-     `SELECT user_id, caption, image_url, likes, dislikes, location FROM posts WHERE post_id=${post_id}`;
+        sql = `SELECT user_id, caption, image_url, likes, dislikes, location FROM posts WHERE post_id=${post_id};`;
 
-     connection.query(sql, (err, results, fields) => {
-         if(err) {
-             return res.json({
-                 message: err.message,
-                 code: res.statusCode = 400
-             });
-         }
+        connection.query(sql, (err, results, fields) => {
+            if(err) {
+                return res.json({
+                    message: err.message,
+                    code: res.statusCode = 400
+                });
+            }
+    
+            const post = results[0];
+    
+            return res.json({
+                message: 'OK',
+                code: res.statusCode = 200,
+                post: post
+            });
+        });
+     } else if(Object.prototype.hasOwnProperty.call(parsedUrl.query, "user_id")) {
+         const user_id = Number.parseInt(parsedUrl.query.user_id);
 
-         const post = results[0];
+         sql = `SELECT user_id, post_id, caption, image_url, likes, dislikes, location FROM posts WHERE user_id=${user_id};`;
 
-         return res.json({
-             message: 'OK',
-             code: res.statusCode = 200,
-             post: post
+         connection.query(sql, (err, results, fields) => {
+            if(err) {
+                return res.json({
+                    message: err.message,
+                    code: res.statusCode = 400
+                });
+            }
+    
+            return res.json({
+                message: 'OK',
+                code: res.statusCode = 200,
+                posts: results
+            });
+        });
+     } else {
+         return res.status(400).json({
+             message: "Did not specify a proper query parameter.",
+             code: 400
          });
-     });
+     }
  });
 
  app.post('/bookmarks', (req, res) => {

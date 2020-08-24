@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
-import {ReactComponent as Photo} from '../icons/icon-add-photo.svg';
-import {ReactComponent as Rest} from '../icons/icon-restaurant.svg';
+import {ReactComponent as Recent} from '../icons/icon-all-inbox.svg';
+import {ReactComponent as Home} from '../icons/icon-home.svg';
+import {ReactComponent as Bookmark} from '../icons/icon-bookmark.svg';
+import {ReactComponent as Like} from '../icons/icon-thumb-up.svg';
 
 export default function TabBar(props) {
     const tabs = [
         {
             label: "Home",
-            icon: Photo,
+            icon: Home,
             route: '/home'
         },
         {
             label: "Recent",
-            icon: Photo,
+            icon: Recent,
             route: '/recent'
         },
         {
             label: 'Likes',
-            icon: Rest,
+            icon: Like,
             route: '/likes'
         },
         {
             label: 'Bookmarks',
-            icon: Photo,
+            icon: Bookmark,
             route: '/bookmarks'
         }
     ];

@@ -22,7 +22,7 @@ export default function SignUp(props) {
 
     const doSignUp = () => {
         fetch(
-            'http://localhost:9000/users',
+            'http://192.168.2.10:9000/users',
             {
                 method: 'POST',
                 headers: {

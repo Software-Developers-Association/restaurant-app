@@ -17,7 +17,7 @@ export default function SignIn(props) {
 
     const doSignIn = () => {
         fetch(
-            'http://localhost:9000/auth',
+            'http://192.168.2.10:9000/auth',
             {
                 method: 'POST',
                 headers: {

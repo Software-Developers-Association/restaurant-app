@@ -398,10 +398,21 @@ function createTableLikes() {
             });
         });
      } else {
-         return res.status(400).json({
-             message: "Did not specify a proper query parameter.",
-             code: 400
-         });
+         sql = 'SELECT user_id, post_id, caption, image_url, likes, dislikes, location FROM posts;';
+
+         connection.query(sql, (err, results, fields) => {
+             if(err)
+                return res.json({
+                    message: err.message,
+                    code: res.statusCode = 500
+                });
+            
+            return res.json({
+                message: 'OK',
+                code: res.statusCode = 200,
+                posts: results
+            });
+         })
      }
  });
 

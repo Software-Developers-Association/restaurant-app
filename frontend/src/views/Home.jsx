@@ -32,10 +32,11 @@ import Button from '../components/Button';
 
 export default function Home(props) {
     const [posts, setPosts] = React.useState([]);
+    const {user} = props;
 
     React.useEffect(() => {
         fetch(
-            'http://192.168.2.10:9000/posts?user_id=1',
+            'http://localhost:9000/posts?user_id=' + user.user_id,
             {
                 method: 'GET'
             }
@@ -43,7 +44,7 @@ export default function Home(props) {
         .then(response => response.json())
         .then(json => {
             for(let i = 0; i < json.posts.length; ++i) {
-                json.posts[i].image_url = 'http://192.168.2.10:9000' + json.posts[i].image_url;
+                json.posts[i].image_url = 'http://localhost:9000' + json.posts[i].image_url;
             }
 
             console.log(json);
@@ -63,7 +64,7 @@ export default function Home(props) {
         ev.preventDefault();
 
         const formData = new FormData(ev.target);
-        formData.append('user_id', '1');
+        formData.append('user_id', user.user_id);
         
         for(const entry of formData.entries()) {
             const key = entry[0];
@@ -73,7 +74,7 @@ export default function Home(props) {
         }
 
         fetch(
-            'http://192.168.2.10:9000/posts',
+            'http://localhost:9000/posts',
             {
                 method: 'POST',
                 body: formData

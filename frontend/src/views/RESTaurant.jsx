@@ -12,6 +12,8 @@ import {
 } from 'react-router-dom';
 
 export default function RESTaurant(props) {
+    const {user} = props;
+
     return (
         <>
             <Router>
@@ -20,16 +22,16 @@ export default function RESTaurant(props) {
                         <Redirect to="/home" />
                     </Route>
                     <Route path="/home">
-                        <Home />
+                        <Home user={user} />
                     </Route>
                     <Route path="/recent">
                         <Recent />
                     </Route>
                     <Route path="/likes">
-                        <Likes />
+                        <Likes user={user} />
                     </Route>
                     <Route path="/bookmarks">
-                        <Bookmarks />
+                        <Bookmarks user={user} />
                     </Route>
                 </Switch>
                 <TabBar />

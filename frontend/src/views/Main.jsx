@@ -8,8 +8,6 @@ const backgroundURL = "https://images.unsplash.com/photo-1513618364580-fe1596762
 export default function Main(props) {
     const [showSignup, setShowSignup] = React.useState(false);
     const [showSignin, setShowSignin] = React.useState(false);
-    const {authCallback = undefined} = props;
-    const [signUpResult, setSignUpResult] = React.useState(false);
 
     return (
         <div className="h-screen md:flex">
@@ -65,7 +63,7 @@ export default function Main(props) {
                 }
 
                 {
-                    showSignin && <SignIn onDismissed={() => setShowSignin(false)} authCallback={authCallback} />
+                    showSignin && <SignIn onDismissed={() => setShowSignin(false)} />
                 }
             </div>
         </div>

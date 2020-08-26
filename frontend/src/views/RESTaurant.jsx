@@ -11,9 +11,7 @@ import {
     Switch
 } from 'react-router-dom';
 
-export default function RESTaurant(props) {
-    const {user} = props;
-
+export default function RESTaurant() {
     return (
         <>
             <Router>
@@ -22,16 +20,16 @@ export default function RESTaurant(props) {
                         <Redirect to="/home" />
                     </Route>
                     <Route path="/home">
-                        <Home user={user} />
+                        <Home />
                     </Route>
                     <Route path="/recent">
                         <Recent />
                     </Route>
                     <Route path="/likes">
-                        <Likes user={user} />
+                        <Likes />
                     </Route>
                     <Route path="/bookmarks">
-                        <Bookmarks user={user} />
+                        <Bookmarks />
                     </Route>
                 </Switch>
                 <TabBar />

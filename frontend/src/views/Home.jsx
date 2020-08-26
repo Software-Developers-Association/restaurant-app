@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PostCardLayout from '../components/PostCardLayout';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
+import { useUserState } from '../context/UserContext';
 
 // const posts = [
 //     {
@@ -32,7 +33,8 @@ import Button from '../components/Button';
 
 export default function Home(props) {
     const [posts, setPosts] = React.useState([]);
-    const {user} = props;
+    //const {user} = props;
+    const user = useUserState();
 
     React.useEffect(() => {
         fetch(

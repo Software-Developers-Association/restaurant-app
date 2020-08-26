@@ -4,6 +4,8 @@ import {ReactComponent as Recent} from '../icons/icon-all-inbox.svg';
 import {ReactComponent as Home} from '../icons/icon-home.svg';
 import {ReactComponent as Bookmark} from '../icons/icon-bookmark.svg';
 import {ReactComponent as Like} from '../icons/icon-thumb-up.svg';
+import {ReactComponent as Exit} from '../icons/icon-exit.svg';
+import {useUserDispatch} from '../context/UserContext';
 
 export default function TabBar(props) {
     const tabs = [
@@ -32,6 +34,38 @@ export default function TabBar(props) {
     const history = useHistory();
     const location = useLocation();
     const [activeTab, setActiveTab] = useState(location.pathname);
+    const userDispath = useUserDispatch();
+
+    const jsxTabs = tabs.map((tab, index) => {
+        return (
+            <button
+                key={index}
+                className={`flex flex-col items-center focus:outline-none ${tab.route === activeTab ? 'text-orange-400': 'text-black text-opacity-50'}`}
+                onClick={() => {
+                    setActiveTab(tab.route);
+                    history.push(tab.route);
+                }}>
+                <tab.icon className="h-5 w-5 fill-current" />
+                <span className="text-xs">
+                    {tab.label}
+                </span>
+            </button>
+        );
+    });
+
+    jsxTabs.push((
+        <button
+        key={tabs.length}
+        className={`flex flex-col items-center focus:outline-none text-red-400`}
+        onClick={() => {
+            userDispath(null);
+        }}>
+        <Exit className="h-5 w-5 fill-current" />
+        <span className="text-xs">
+            Logout
+        </span>
+    </button>
+    ));
 
     return (
         <div>
@@ -42,22 +76,7 @@ export default function TabBar(props) {
                 className="fixed bottom-0 left-0 w-full bg-white shadow-2xl h-16">
                 <div className="flex justify-around items-center h-full max-w-sm mx-auto">
                     {
-                        tabs.map((tab, index) => {
-                            return (
-                                <button
-                                    key={index}
-                                    className={`flex flex-col items-center focus:outline-none ${tab.route === activeTab ? 'text-orange-400': 'text-black text-opacity-50'}`}
-                                    onClick={() => {
-                                        setActiveTab(tab.route);
-                                        history.push(tab.route);
-                                    }}>
-                                    <tab.icon className="h-5 w-5 fill-current" />
-                                    <span className="text-xs">
-                                        {tab.label}
-                                    </span>
-                                </button>
-                            );
-                        })
+                        jsxTabs
                     }
                 </div>
             </div>

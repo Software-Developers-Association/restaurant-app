@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
-import {UserContext} from '../context/UserContext';
+import {useUserDispatch} from '../context/UserContext';
 
 const genericPhoto = "https://www.shareicon.net/data/512x512/2015/09/24/106687_user_512x512.png";
 
@@ -12,12 +12,10 @@ const propTypes = {
 
 export default function SignIn(props) {
     const {
-        onDismissed = undefined,
-        authCallback = undefined
+        onDismissed = undefined
     } = props;
-
-    const userContext = React.useContext(UserContext);
-    const [user, setUser] = userContext;
+    
+    const userDispath = useUserDispatch();
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -38,24 +36,22 @@ export default function SignIn(props) {
             })
             .then(response => response.json())
             .then(serverResponse => {
-                setUser(serverResponse.user);
-
                 switch(serverResponse.code) {
                     case 400: {
-                        authCallback(false);
+                        userDispath(null);
                     } break;
                     case 200: {
-                        authCallback(true);
+                        userDispath(serverResponse.user);
                     } break;
                     default: {
-                        authCallback(false);
+                        userDispath(null);
                     } break;
                 }
             })
             .catch(err => {
                 console.log("Request failed: " + err);
 
-                authCallback(false);
+                userDispath(null);
             });
     };
 
